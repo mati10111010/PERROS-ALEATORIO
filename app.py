@@ -3,9 +3,9 @@ import requests
 
 app = Flask(__name__)
 
-DOG_API_RANDOM = "https://dog.ceo/api/breeds/image/random"
-DOG_API_BY_BREED = "https://dog.ceo/api/breed/{}/images/random"
-DOG_API_BREEDS = "https://dog.ceo/api/breeds/list/all"
+DOG_API_RANDOM = "https://dog.ceo/api/breeds/image/random" # perros random
+DOG_API_BY_BREED = "https://dog.ceo/api/breed/{}/images/random" # perros por raza
+DOG_API_BREEDS = "https://dog.ceo/api/breeds/list/all" # lista de razas
 
 @app.route("/", methods=["GET", "POST"])
 def index():

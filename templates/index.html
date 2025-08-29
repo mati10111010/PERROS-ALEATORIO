@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perros Aleatorios</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <h1> Perros Aleatorios</h1>
+
+  <form method="POST">
+    <select name="breed">
+      <option value=""> Cualquier raza </option>
+      {% for breed in breeds %}
+        <option value="{{ breed }}">{{ breed.capitalize() }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Ver un perro</button>
+  </form>
+
+  {% if image_url %}
+    <div>
+      <img src="{{ image_url }}" alt="Imagen de perro">
+    </div>
+  {% endif %}
+</body>
+</html>
+

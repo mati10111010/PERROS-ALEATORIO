@@ -1,29 +1,33 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import requests
 
 app = Flask(__name__)
 
-DOG_API_RANDOM = "https://dog.ceo/api/breeds/image/random" # perros random
-DOG_API_BY_BREED = "https://dog.ceo/api/breed/{}/images/random" # perros por raza
-DOG_API_BREEDS = "https://dog.ceo/api/breeds/list/all" # lista de razas
+# Urls de la Api
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    breeds = get_breeds()
-    image_url = None
+API_ALEATORIO = "https://dog.ceo/api/breeds/image/random"
+API_POR_RAZA = "https://dog.ceo/api/breed/{}/images/random"
+API_TODAS_RAZAS = "https://dog.ceo/api/breeds/list/all"
 
-    if request.method == "POST":
-        breed = request.form.get("breed")
-        if breed:
-            image_url = requests.get(DOG_API_BY_BREED.format(breed)).json()["message"]
-        else:
-            image_url = requests.get(DOG_API_RANDOM).json()["message"]
+@app.route("/")
+def inicio():
+    return render_template("index.html")
 
-    return render_template("index.html", breeds=breeds, image_url=image_url)
+@app.route("/razas")
+def obtener_razas():
+    respuesta = requests.get(API_TODAS_RAZAS).json()
+    return jsonify(sorted(respuesta["message"].keys()))
 
-def get_breeds():
-    response = requests.get(DOG_API_BREEDS).json()
-    return sorted(response["message"].keys())
+@app.route("/perro")
+def obtener_perro():
+    raza = request.args.get("raza")
+    if raza:
+        url = API_POR_RAZA.format(raza)
+    else:
+        url = API_ALEATORIO
+
+    respuesta = requests.get(url).json()
+    return jsonify({"imagen": respuesta["message"]})
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -3,27 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perros Aleatorios</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Dog API App</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-  <h1> Perros Aleatorios</h1>
+  <!-- Barra superior -->
 
-  <form method="POST">
-    <select name="breed">
-      <option value=""> Cualquier raza </option>
-      {% for breed in breeds %}
-        <option value="{{ breed }}">{{ breed.capitalize() }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit">Ver un perro</button>
-  </form>
+  <div class="barra-superior">🐾 IMÁGENES DE PERROS 🐾</div>
 
-  {% if image_url %}
-    <div>
-      <img src="{{ image_url }}" alt="Imagen de perro">
-    </div>
-  {% endif %}
+  <!-- Contenido principal -->
+
+  <main>
+    <h1>🐶 Elija su raza de Perro favorita</h1>
+
+    <form id="formulario-perro">
+      <label for="raza">Selecciona una raza:</label>
+      <select id="raza">
+        <option value="">Aleatorio</option>
+      </select>
+      <button type="submit">Ver Perro</button>
+    </form>
+
+    <!-- Contenido principal -->
+
+    <div id="resultado"></div>
+
+    <!-- Historial -->
+
+    <h2>Historial:</h2>
+    <div id="historial"></div>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
-
